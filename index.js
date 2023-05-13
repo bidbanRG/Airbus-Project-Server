@@ -14,7 +14,10 @@ app.get('/',(req,res) => {res.send('hello')});
 app.get('/search',async (req,res) => {
      try{
 
-
+        const page = parseInt(req.query.page);
+        const query = req.query.q;
+        const limit = 10;
+        const skip = (page - 1) * limit; 
         let result = await client.connect();
   
         let db = result.db(dbName);
@@ -23,7 +26,7 @@ app.get('/search',async (req,res) => {
   
   
          
-           let values = await collection.find({"Part Name":{$regex:req.query.q}}).toArray();
+           let values = await collection.find({"Part Name":{$regex:req.query.q}}).skip(skip).limit(limit).toArray();
            
            res.json(values);
         

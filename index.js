@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const client = require('./Mongo.js');
 const {ObjectId} = require('mongodb');
 
@@ -7,7 +8,7 @@ const collectionName = 'aircraft_parts';
 const dbName = 'airbusdb';
 
 app.use(express.json());
-
+app.use(cors());
 app.get('/',(req,res) => {res.send('hello')});
 
 app.get('/search',async (req,res) => {

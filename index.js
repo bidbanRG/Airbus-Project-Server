@@ -9,6 +9,23 @@ const dbName = 'airbusdb';
 
 app.use(express.json());
 app.use(cors());
+app.use('*',function(req, res, next) { //allow cross origin requests
+
+   
+    
+    res.setHeader('Access-Control-Allow-Origin', `*`);
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
 app.get('/',(req,res) => {res.send('hello')});
 
 app.get('/search',async (req,res) => {
@@ -16,7 +33,7 @@ app.get('/search',async (req,res) => {
 
         const page = parseInt(req.query.page);
         const query = req.query.q;
-        const limit = 10;
+        const limit = parseInt(process.env.LIMIT);
         const skip = (page - 1) * limit; 
         let result = await client.connect();
   

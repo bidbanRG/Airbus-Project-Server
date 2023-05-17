@@ -8,12 +8,14 @@ const collectionName = 'aircraft_parts';
 const dbName = 'airbusdb';
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: '*' // Allow requests from all origins
+}));
 app.use('*',function(req, res, next) { //allow cross origin requests
 
    
     
-    res.setHeader('Access-Control-Allow-Origin', `*`);
+    res.setHeader('Access-Control-Allow-Origin', '*');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
